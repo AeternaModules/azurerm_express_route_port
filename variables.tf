@@ -35,25 +35,25 @@ EOT
     name                = string
     peering_location    = string
     resource_group_name = string
-    billing_type        = optional(string, "MeteredData")
+    billing_type        = optional(string) # Default: "MeteredData"
     tags                = optional(map(string))
     identity = optional(object({
       identity_ids = optional(set(string))
       type         = string
     }))
     link1 = optional(object({
-      admin_enabled                 = optional(bool, false)
+      admin_enabled                 = optional(bool) # Default: false
       macsec_cak_keyvault_secret_id = optional(string)
-      macsec_cipher                 = optional(string, "GcmAes128")
+      macsec_cipher                 = optional(string) # Default: "GcmAes128"
       macsec_ckn_keyvault_secret_id = optional(string)
-      macsec_sci_enabled            = optional(bool, false)
+      macsec_sci_enabled            = optional(bool) # Default: false
     }))
     link2 = optional(object({
-      admin_enabled                 = optional(bool, false)
+      admin_enabled                 = optional(bool) # Default: false
       macsec_cak_keyvault_secret_id = optional(string)
-      macsec_cipher                 = optional(string, "GcmAes128")
+      macsec_cipher                 = optional(string) # Default: "GcmAes128"
       macsec_ckn_keyvault_secret_id = optional(string)
-      macsec_sci_enabled            = optional(bool, false)
+      macsec_sci_enabled            = optional(bool) # Default: false
     }))
   }))
 }
