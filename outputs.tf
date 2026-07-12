@@ -1,3 +1,7 @@
+output "express_route_ports_id" {
+  description = "Map of id values across all express_route_ports, keyed the same as var.express_route_ports"
+  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => v.id }
+}
 output "express_route_ports_bandwidth_in_gbps" {
   description = "Map of bandwidth_in_gbps values across all express_route_ports, keyed the same as var.express_route_ports"
   value       = { for k, v in azurerm_express_route_port.express_route_ports : k => v.bandwidth_in_gbps }
