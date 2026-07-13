@@ -35,43 +35,27 @@ EOT
     name                = string
     peering_location    = string
     resource_group_name = string
-    billing_type        = optional(string) # Default: "MeteredData"
+    billing_type        = optional(string)
     tags                = optional(map(string))
     identity = optional(object({
       identity_ids = optional(set(string))
       type         = string
     }))
     link1 = optional(object({
-      admin_enabled                 = optional(bool) # Default: false
+      admin_enabled                 = optional(bool)
       macsec_cak_keyvault_secret_id = optional(string)
-      macsec_cipher                 = optional(string) # Default: "GcmAes128"
+      macsec_cipher                 = optional(string)
       macsec_ckn_keyvault_secret_id = optional(string)
-      macsec_sci_enabled            = optional(bool) # Default: false
+      macsec_sci_enabled            = optional(bool)
     }))
     link2 = optional(object({
-      admin_enabled                 = optional(bool) # Default: false
+      admin_enabled                 = optional(bool)
       macsec_cak_keyvault_secret_id = optional(string)
-      macsec_cipher                 = optional(string) # Default: "GcmAes128"
+      macsec_cipher                 = optional(string)
       macsec_ckn_keyvault_secret_id = optional(string)
-      macsec_sci_enabled            = optional(bool) # Default: false
+      macsec_sci_enabled            = optional(bool)
     }))
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.express_route_ports : (
-        length(v.peering_location) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.express_route_ports : (
-        v.bandwidth_in_gbps >= 1
-      )
-    ])
-    error_message = "must be at least 1"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_express_route_port's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -94,6 +78,12 @@ EOT
   #   source:    [from resourcegroups.ValidateName] !matched
   # path: location
   #   source:    location.EnhancedValidate: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
+  # path: peering_location
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: bandwidth_in_gbps
+  #   condition: value >= 1
+  #   message:   must be at least 1
   # path: encapsulation
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
   # path: identity.type
