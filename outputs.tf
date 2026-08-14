@@ -24,15 +24,15 @@ output "express_route_ports_guid" {
 }
 output "express_route_ports_identity" {
   description = "Map of identity values across all express_route_ports, keyed the same as var.express_route_ports"
-  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => v.identity if v.identity != null && length(v.identity) > 0 }
+  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => one(v.identity) if v.identity != null && length(v.identity) > 0 }
 }
 output "express_route_ports_link1" {
   description = "Map of link1 values across all express_route_ports, keyed the same as var.express_route_ports"
-  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => v.link1 if v.link1 != null && length(v.link1) > 0 }
+  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => one(v.link1) if v.link1 != null && length(v.link1) > 0 }
 }
 output "express_route_ports_link2" {
   description = "Map of link2 values across all express_route_ports, keyed the same as var.express_route_ports"
-  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => v.link2 if v.link2 != null && length(v.link2) > 0 }
+  value       = { for k, v in azurerm_express_route_port.express_route_ports : k => one(v.link2) if v.link2 != null && length(v.link2) > 0 }
 }
 output "express_route_ports_location" {
   description = "Map of location values across all express_route_ports, keyed the same as var.express_route_ports"
